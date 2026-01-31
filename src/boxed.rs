@@ -73,7 +73,7 @@ where
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>> {
-        utils::default_find_case(self, expected, variable)
+        self.0.find_case(expected, variable)
     }
 }
 

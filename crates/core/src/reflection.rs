@@ -117,6 +117,20 @@ impl<'a> Case<'a> {
         }
     }
 
+    /// Transfer ownership of this case to the given predicate.
+    pub fn transfer<'b>(self, predicate: Option<&'b dyn PredicateReflection>) -> Case<'b> {
+        Case {
+            predicate,
+            result: self.result(),
+            children: self
+                .children
+                .into_iter()
+                .map(|child| child.transfer(predicate))
+                .collect(),
+            products: self.products,
+        }
+    }
+
     /// Add an additional by product to a `Case`.
     pub fn add_product(mut self, product: Product) -> Self {
         self.products.push(product);
